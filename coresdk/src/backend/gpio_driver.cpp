@@ -16,7 +16,7 @@ using namespace std;
 // Use https://abyz.me.uk/rpi/pigpio/pdif2.html for reference
 namespace splashkit_lib
 {
-        int pi;
+        int pi = -1;
 
         // Check if pigpio_init() has been called before any other GPIO functions
         bool check_pi()
@@ -47,62 +47,113 @@ namespace splashkit_lib
                 {
                         return gpio_read(pi, pin);
                 }
+		else
+		{
+			return -1;
+		}
         }
 
         // Write a value to a GPIO pin
         void sk_gpio_write(int pin, int value)
         {
 
-                check_pi();
-                gpio_write(pi, pin, value);
+                if (check_pi())
+                {
+                	gpio_write(pi, pin, value);
+		}
+		else
+		{
+			return;
+		}
         }
 
         // Set the mode of a GPIO pin
         void sk_gpio_set_mode(int pin, int mode)
         {
 
-                check_pi();
-                set_mode(pi, pin, mode);
+                if (check_pi())
+                {
+	                set_mode(pi, pin, mode);
+		}
+		else
+		{
+			return;
+		}
         }
 
         int sk_gpio_get_mode(int pin)
         {
 
-                check_pi();
-                return get_mode(pi, pin);
+                if (check_pi())
+                {
+                	return get_mode(pi, pin);
+		}
+		else
+		{
+			return;
+		}
         }
         void sk_gpio_set_pull_up_down(int pin, int pud)
         {
 
-                check_pi();
-                set_pull_up_down(pi, pin, pud);
+                if (check_pi())
+                {
+                	set_pull_up_down(pi, pin, pud);
+		}
+		else
+		{
+			return;
+		}
         }
         void sk_set_pwm_range(int pin, int range)
         {
 
-                check_pi();
-                set_PWM_range(pi, pin, range);
+                if (check_pi())
+                {
+                	set_PWM_range(pi, pin, range);
+		}
+		else
+		{
+			return;
+		}
         }
         void sk_set_pwm_frequency(int pin, int frequency)
         {
 
-                check_pi();
-                set_PWM_frequency(pi, pin, frequency);
+                if (check_pi())
+                {
+                	set_PWM_frequency(pi, pin, frequency);
+		}
+		else
+		{
+			return;
+		}
         }
         void sk_set_pwm_dutycycle(int pin, int dutycycle)
         {
 
-                check_pi();
-                set_PWM_dutycycle(pi, pin, dutycycle);
+                if (check_pi())
+                {
+                	set_PWM_dutycycle(pi, pin, dutycycle);
+		}
+		else
+		{
+			return;
+		}
         }
 
         // Cleanup the GPIO library
         void sk_gpio_cleanup()
         {
 
-                check_pi();
-
-                pigpio_stop(pi);
+                if (check_pi())
+                {
+                	pigpio_stop(pi);
+		}
+		else
+		{
+			return;
+		}
         }
 }
 #endif
