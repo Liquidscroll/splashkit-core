@@ -53,6 +53,7 @@ void setup_tests()
     add_test("UDP Networking Test", run_udp_networking_test);
     add_test("TCP Networking Test", run_tcp_networking_test);
     add_test("GPIO Tests", run_gpio_tests);
+    add_test("GPIO Test - SPI", run_spi_test);
    
 }
 
